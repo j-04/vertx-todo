@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.metadata.dpl_name }}
+  namespace: {{ .Release.Namespace }}
+  labels: 
+    app: {{ .Values.metadata.app_name }}
+spec:
+  replicas: {{ .Values.metadata.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.metadata.app_name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.metadata.app_name}}
+    spec:
+      containers:
+        - name: {{ .Values.metadata.app_name }}
+          image: {{ .Values.metadata.app_image}}
+          imagePullPolicy: Never
+          ports:
+            - containerPort: {{ .Values.metadata.app_port }}
+		
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.metadata.srvc_name}}
+  namespace: {{ .Release.Namespace }}
+spec:
+  selector:
+    app: {{ .Values.metadata.app_name }}
+  type: LoadBalancer
+  ports:
+    - protocol:
+      port: {{ .Values.metadata.app_port }}
+      targetPort: {{ .Values.metadata.app_port }}
+      nodePort: {{ .Values.metadata.node_port }}

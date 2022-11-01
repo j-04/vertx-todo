@@ -1,0 +1,9 @@
+metadata:
+  app_name: vertx-todo
+  app_image: local/vertx-todo:1.0.0
+  app_port: 9090
+  dpl_name: vertx-todo-depl
+  srvc_name: vertx-todo-srvc
+  cfgmap_name: vertx-todo-cfgmap
+  replicas: 1
+  node_port: 30300
